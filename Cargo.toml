@@ -3,7 +3,7 @@ resolver = "2"
 members = ["crates/ws-core", "crates/ws-cli", "src-tauri"]
 
 [workspace.package]
-version = "0.1.0"
+version = "1.0.0"
 edition = "2021"
 authors = ["ws1004"]
 license = "MIT"
