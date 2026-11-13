@@ -1,0 +1,47 @@
+[package]
+name = "ws-core"
+description = "WS Collector 수집 엔진 (GUI, CLI 공용)"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+thiserror.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+log.workspace = true
+md-5.workspace = true
+sha1.workspace = true
+sha2.workspace = true
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+# 네트워크 전송: 연결 코드 기반 키 합의(SPAKE2) + 암호화(ChaCha20-Poly1305). 모두 순수 Rust (musl 교차 빌드 용이)
+spake2 = "0.4"
+chacha20poly1305 = "0.10"
+hkdf = "0.12"
+getrandom = "0.2"
+# E01 압축: 순수 Rust zlib (musl 교차 빌드 용이)
+flate2 = { version = "1", default-features = false, features = ["zlib-rs"] }
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.58", features = [
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_Storage_FileSystem",
+    "Win32_System_IO",
+    "Win32_System_Ioctl",
+    "Win32_System_Threading",
+    "Win32_System_SystemInformation",
+    "Win32_System_Registry",
+    "Win32_System_Diagnostics_ToolHelp",
+    "Win32_System_Time",
+    "Win32_System_Diagnostics_Debug",
+    "Win32_System_Services",
+] }
+
+[dev-dependencies]
+tempfile = "3"

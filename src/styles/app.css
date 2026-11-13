@@ -1,0 +1,101 @@
+/* 실제 앱에서 목업에 더한 부분 */
+:root {
+  --warn-line: rgb(157 93 0 / 0.25);
+}
+
+/* 데스크톱 앱: 창 전체를 쓰고 글자 선택은 내용 영역에서만 */
+html, body, #root { height: 100%; }
+body { user-select: none; }
+input, textarea, .mono, .log, .hashes dd, .table td, .path-preview__path { user-select: text; }
+
+/* 비활성 작업 카드 (메모리 덤프: 다음 버전) */
+.task.is-disabled { cursor: not-allowed; opacity: 0.6; box-shadow: var(--shadow-sm); border-color: var(--border); }
+.task.is-disabled .switch { opacity: 0.5; }
+
+/* 점검 실패 줄 */
+.check.is-fail { background: var(--danger-soft); }
+.check.is-fail .check__ic { color: var(--danger); }
+
+/* 경고 안내 줄 */
+.infobar--warn { background: var(--warn-soft); border-color: var(--warn-line); }
+.infobar--warn .ic { color: var(--warn); }
+
+/* 결과 카드 보조 줄 */
+.result__error { margin: 0; padding: 10px 20px; color: var(--danger); font-size: 13px; border-bottom: 1px solid var(--border-soft); }
+.result__files { margin: 0; padding: 8px 20px 12px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border-soft); overflow-wrap: anywhere; }
+
+/* 비활성 아이콘 버튼 */
+.icon-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* 진행 중 하단 저장 위치가 길면 줄임 */
+.bar__sum > span { max-width: 640px; }
+.overall__sub .mono { font-size: 12px; }
+
+.test-banner { font-size: 12.5px; padding: 8px 14px; }
+
+/* 로그: 긴 해시 줄은 접어서 가로 스크롤 없앰 */
+.log { overflow-x: hidden; }
+.log span { overflow-wrap: anywhere; min-width: 0; }
+
+/* 결과 카드 제목은 일반 글꼴 (파일 이름은 아래 줄에 고정폭으로) */
+.result__name b { font-family: var(--font); font-size: 14.5px; font-weight: 600; }
+.overall__path { display: block; margin-top: 2px; }
+
+/* ---------- 네트워크 보내기, 받기 ---------- */
+.field__label { font-size: 13px; font-weight: 600; color: var(--text-2); }
+.is-upper { text-transform: uppercase; }
+.dest--remote { margin-bottom: 4px; }
+.dest--remote .ic { color: var(--accent); }
+
+/* 사이드바: 수신 항목 */
+.nav__sep { margin: 18px 10px 6px; font-size: 11.5px; font-weight: 600; color: var(--muted); letter-spacing: 0.02em; }
+.steps__dot--icon svg { display: block; width: 14px; height: 14px; }
+.steps__dot--icon.is-live { border-color: var(--accent); color: var(--accent); }
+
+/* 연결 코드 카드 */
+.code-card { padding: 22px 24px 24px; display: grid; gap: 20px; align-content: start; }
+.code-card__status { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--accent-text); }
+.code-card__label { margin: 0 0 6px; font-size: 12.5px; font-weight: 600; color: var(--muted); }
+.code-card__row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.code-card__code { font-size: 40px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.1; color: var(--text); font-variant-numeric: tabular-nums; }
+.code-card__addr { font-size: 18px; font-weight: 600; }
+.code-card__note { margin: 0; font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+.code-card__warns { list-style: none; margin: 0; padding: 10px 12px; display: grid; gap: 6px; border-radius: var(--radius-md); background: var(--warn-soft); border: 1px solid var(--warn-line); font-size: 12.5px; }
+.code-card__warns li { display: flex; gap: 8px; align-items: flex-start; }
+.code-card__warns .ic { color: var(--warn); flex: none; margin-top: 1px; }
+.live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 rgb(0 95 184 / 0.5); animation: live-pulse 1.6s ease-out infinite; }
+@keyframes live-pulse { 0% { box-shadow: 0 0 0 0 rgb(0 95 184 / 0.45); } 70% { box-shadow: 0 0 0 8px rgb(0 95 184 / 0); } 100% { box-shadow: 0 0 0 0 rgb(0 95 184 / 0); } }
+@media (prefers-reduced-motion: reduce) { .live-dot { animation: none; } }
+
+/* 보내는 쪽 안내 */
+.howto { margin: 0; padding: 14px 20px 18px 40px; display: grid; gap: 14px; font-size: 13px; line-height: 1.6; color: var(--text-2); }
+.howto li::marker { color: var(--muted); font-weight: 600; }
+.howto b { display: block; color: var(--text); font-weight: 600; margin-bottom: 2px; }
+.howto em { font-style: normal; font-weight: 600; color: var(--accent-text); }
+.howto code { padding: 1px 5px; border-radius: 3px; background: var(--surface-2); user-select: text; }
+.cmd { display: flex; gap: 6px; align-items: flex-start; margin-top: 8px; padding: 10px 6px 10px 12px; border-radius: var(--radius-md); background: #1F2328; color: #E6EDF3; }
+.cmd code { flex: 1; min-width: 0; background: none; padding: 0; font-size: 12px; line-height: 1.6; overflow-wrap: break-word; font-variant-ligatures: none; user-select: text; }
+.cmd .icon-btn { color: #C9D1D9; margin-left: 0; }
+
+.checks--inline { padding-top: 0; }
+
+/* 수신 중 사건 정보 줄 */
+.rx-case { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 0; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); backdrop-filter: blur(20px); }
+.rx-case div { padding: 12px 16px; min-width: 0; }
+.rx-case div + div { border-left: 1px solid var(--border-soft); }
+.rx-case dt { font-size: 12px; color: var(--muted); }
+.rx-case dd { margin: 2px 0 0; font-weight: 600; overflow-wrap: anywhere; }
+.rx-case dd .mono { font-weight: 400; color: var(--muted); margin-left: 4px; }
+
+.files--rx { padding: 10px 12px 14px; }
+.files__meta { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); white-space: nowrap; }
+.files__empty { grid-template-columns: 1fr !important; color: var(--muted); }
+.panel__head .actions { margin-left: auto; display: flex; gap: 8px; }
+.code-card__row .icon-btn { margin-left: 0; }
+.job--placeholder { grid-template-columns: 1fr; }
+.job--placeholder .job__title { grid-column: 1 / -1; }
+/* 제목 줄: 긴 안내문이 있어도 오른쪽 경과 시간이 아래로 밀리지 않게 */
+.page-head--row > div:first-child { flex: 1; min-width: 0; }
+.page-head--row > div:first-child p { overflow-wrap: anywhere; }
+.page-head--row .elapsed { flex: none; }
+.page-head--row { flex-wrap: nowrap; }

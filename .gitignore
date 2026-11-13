@@ -1,0 +1,19 @@
+# 빌드 산출물
+target/
+dist/
+node_modules/
+
+# 실행 시 생성
+runtime/
+*.log
+
+# Tauri 자동 생성
+src-tauri/gen/
+
+# OS/IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*~

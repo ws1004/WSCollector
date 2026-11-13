@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>사건 정보: WS Collector 데모</title>
+<meta name="description" content="WS Collector Windows 라이브 수집 도구의 클릭 가능한 디자인 데모입니다. 장치, 시각, 해시는 모두 예시 데이터입니다.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./theme.css">
+<link rel="stylesheet" href="./screens.css">
+</head>
+<body data-screen="case">
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-disk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/><path d="M6 16h.01M10 16h.01"/></symbol>
+    <symbol id="i-usb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="9" width="10" height="13" rx="2"/><path d="M9 9V3h6v6M11 5.5h.01M13 5.5h.01"/></symbol>
+    <symbol id="i-mem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10v4M11 10v4M15 10v4M7 18v3M17 18v3M7 3v3M17 3v3"/></symbol>
+    <symbol id="i-pc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-check-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36L21 8"/><path d="M21 3v5h-5"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/><path d="M12 9v4M12 17h.01"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+  </defs>
+</svg>
+
+<div class="app">
+  <nav class="nav" aria-label="수집 단계">
+    <a class="brand" href="#case" aria-label="WS Collector, 처음 화면으로">
+      <span class="brand__mark" aria-hidden="true">WS</span>
+      <span class="brand__name" translate="no">WS Collector</span>
+    </a>
+    <ol class="steps">
+      <li data-step="case"><a href="#case"><span class="steps__dot"><span class="n">1</span><svg><use href="#i-check"/></svg></span><span class="steps__text"><b>사건 정보</b><small id="sub-case">입력 중</small></span></a></li>
+      <li data-step="select"><a href="#select"><span class="steps__dot"><span class="n">2</span><svg><use href="#i-check"/></svg></span><span class="steps__text"><b>수집 항목</b><small id="sub-select">대상과 옵션 선택</small></span></a></li>
+      <li data-step="run"><a href="#run"><span class="steps__dot"><span class="n">3</span><svg><use href="#i-check"/></svg></span><span class="steps__text"><b>수집 진행</b><small id="sub-run">대기</small></span></a></li>
+      <li data-step="done"><a href="#done"><span class="steps__dot"><span class="n">4</span><svg><use href="#i-check"/></svg></span><span class="steps__text"><b>결과</b><small id="sub-done">대기</small></span></a></li>
+    </ol>
+    <div class="nav__status" id="navStatus">
+      <svg class="ic"><use href="#i-shield"/></svg>
+      <span><b id="navStatusTitle">관리자 권한</b><small id="navStatusSub">환경 점검 5개 통과, 1개 주의</small></span>
+    </div>
+  </nav>
+
+  <main class="main" id="main" tabindex="-1">
+
+    <!-- ===== 1. 사건 정보 ===== -->
+    <section class="screen" id="screen-case" aria-labelledby="h-case">
+      <header class="page-head">
+        <h1 id="h-case">사건 정보</h1>
+        <p>보고서와 증거 파일 이름에 들어갈 정보입니다. 수집을 시작하면 바꿀 수 없습니다.</p>
+      </header>
+
+      <div class="case-grid">
+        <section class="panel" aria-labelledby="h-form">
+          <header class="panel__head"><h2 id="h-form">사건과 수집자</h2></header>
+          <form class="form" id="caseForm" novalidate>
+            <div class="field">
+              <label for="caseNo">사건 번호</label>
+              <input id="caseNo" name="caseNo" type="text" autocomplete="off" spellcheck="false" required placeholder="예: 2026-형제-01187">
+              <p class="field__help">저장 폴더 이름으로 사용됩니다.</p>
+            </div>
+            <div class="field">
+              <label for="evNo">증거 번호</label>
+              <input id="evNo" name="evNo" type="text" autocomplete="off" spellcheck="false" required placeholder="예: EV-003">
+              <p class="field__help">하위 폴더와 파일 이름에 사용됩니다.</p>
+            </div>
+            <div class="field">
+              <label for="examiner">수집자</label>
+              <input id="examiner" name="examiner" type="text" autocomplete="name" required placeholder="예: 홍길동">
+              <p class="field__help"></p>
+            </div>
+            <div class="field">
+              <label for="org">소속</label>
+              <input id="org" name="org" type="text" autocomplete="organization" placeholder="예: 디지털포렌식팀">
+              <p class="field__help"></p>
+            </div>
+            <div class="field field--wide">
+              <label for="outPath">저장 폴더</label>
+              <div class="inline">
+                <input id="outPath" name="outPath" type="text" spellcheck="false" class="mono-input" required placeholder="예: E:\Cases">
+                <button type="button" class="btn btn--ghost" id="browseBtn"><svg class="ic"><use href="#i-folder"/></svg>찾아보기</button>
+              </div>
+              <p class="field__help" id="outHelp">대상 PC의 내장 디스크가 아닌 외부 매체의 폴더를 고르세요.</p>
+            </div>
+            <div class="field field--wide">
+              <div class="path-preview" aria-live="polite">
+                <span class="path-preview__label">증거 파일이 저장될 경로</span>
+                <p class="path-preview__path mono" id="pathPreview"></p>
+                <p class="path-preview__note">사건 번호와 증거 번호 폴더는 수집을 시작할 때 자동으로 만들어집니다.</p>
+              </div>
+            </div>
+            <div class="field field--wide">
+              <label for="memo">현장 메모</label>
+              <textarea id="memo" name="memo" rows="3" placeholder="예: 피의자 사무실 책상 위 데스크톱, 전원 켜진 상태로 발견…"></textarea>
+            </div>
+            <button type="submit" class="visually-hidden" tabindex="-1">다음: 수집 항목</button>
+          </form>
+        </section>
+
+        <div class="stack">
+          <section class="panel" aria-labelledby="h-env">
+            <header class="panel__head">
+              <h2 id="h-env">수집 환경 점검</h2>
+              <button type="button" class="btn btn--subtle" id="recheckBtn"><svg class="ic"><use href="#i-refresh"/></svg>다시 점검</button>
+            </header>
+            <ul class="checks" id="checks">
+              <li class="check is-pass"><svg class="check__ic"><use href="#i-check-c"/></svg><span><b>관리자 권한</b><small>디스크와 메모리에 직접 접근할 수 있습니다</small></span></li>
+              <li class="check is-pass"><svg class="check__ic"><use href="#i-check-c"/></svg><span><b>실행 위치</b><small class="mono">F:\WSCollector (SanDisk Ultra, 이동식)</small></span></li>
+              <li class="check is-pass"><svg class="check__ic"><use href="#i-check-c"/></svg><span><b>저장 위치</b><small>대상 PC의 내장 디스크가 아닙니다</small></span></li>
+              <li class="check is-pass"><svg class="check__ic"><use href="#i-check-c"/></svg><span><b>화면 엔진 격리</b><small>WebView2 휴대용 런타임, 데이터 폴더를 USB에 둠</small></span></li>
+              <li class="check is-pass"><svg class="check__ic"><use href="#i-check-c"/></svg><span><b>임시 폴더</b><small class="mono">F:\WSCollector\tmp</small></span></li>
+              <li class="check is-warn"><svg class="check__ic"><use href="#i-alert"/></svg><span><b>실시간 보호 켜짐</b><small>Microsoft Defender가 메모리 드라이버를 차단할 수 있습니다</small></span></li>
+            </ul>
+          </section>
+
+          <section class="panel clock" aria-labelledby="h-clock">
+            <svg class="clock__ic"><use href="#i-clock"/></svg>
+            <div>
+              <h2 id="h-clock">대상 시스템 시각</h2>
+              <p class="clock__time mono" id="clock">2026-11-05 14:32:08</p>
+              <p class="clock__sub">한국 표준시 (UTC+09:00). 보고서에 그대로 기록됩니다.</p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 2. 수집 항목 ===== -->
+    <section class="screen" id="screen-select" aria-labelledby="h-select" hidden>
+      <header class="host">
+        <div class="host__icon"><svg><use href="#i-pc"/></svg></div>
+        <div class="host__body">
+          <h1 id="h-select">DESKTOP-7Q2LM4K</h1>
+          <dl class="host__specs">
+            <div><dt>운영체제</dt><dd>Windows 11 Pro 23H2</dd></div>
+            <div><dt>프로세서</dt><dd>Intel Core i7-13700</dd></div>
+            <div><dt>메모리</dt><dd>32 GB</dd></div>
+            <div><dt>부팅</dt><dd>오늘 08:51</dd></div>
+          </dl>
+        </div>
+      </header>
+
+      <div class="tasks">
+        <label class="task is-on" data-task="disk">
+          <input type="checkbox" id="taskDisk" checked>
+          <span class="task__icon"><svg><use href="#i-disk"/></svg></span>
+          <span class="task__text"><b>디스크 이미징</b><small id="diskSub">대상 1개, 931.51 GB</small></span>
+          <span class="switch" aria-hidden="true"></span>
+        </label>
+        <label class="task is-on" data-task="mem">
+          <input type="checkbox" id="taskMem" checked>
+          <span class="task__icon"><svg><use href="#i-mem"/></svg></span>
+          <span class="task__text"><b>메모리 덤프</b><small id="memSub">물리 메모리 32.00 GB, 먼저 실행</small></span>
+          <span class="switch" aria-hidden="true"></span>
+        </label>
+      </div>
+
+      <div class="grid">
+        <section class="panel panel--disks" aria-labelledby="h-disks">
+          <header class="panel__head">
+            <h2 id="h-disks">디스크와 볼륨</h2>
+            <span class="count" id="diskCount">5개 발견</span>
+            <label class="demo-pick"><span>데모 상태</span>
+              <select id="demoState">
+                <option value="full">정상</option>
+                <option value="loading">불러오는 중</option>
+                <option value="error">권한 없음</option>
+                <option value="empty">디스크 없음</option>
+              </select>
+            </label>
+            <button type="button" class="icon-btn" id="refreshDisks" aria-label="디스크 목록 새로고침"><svg><use href="#i-refresh"/></svg></button>
+          </header>
+          <div class="disks" id="disks"></div>
+        </section>
+
+        <section class="panel panel--opts" aria-labelledby="h-opts">
+          <header class="panel__head panel__head--tabs">
+            <h2 id="h-opts" class="visually-hidden">수집 옵션</h2>
+            <div class="selector" role="group" aria-label="옵션 종류">
+              <button type="button" class="selector__item" aria-pressed="true" data-opt="disk">이미징 옵션</button>
+              <button type="button" class="selector__item" aria-pressed="false" data-opt="mem">메모리 옵션</button>
+            </div>
+          </header>
+
+          <div class="opts" id="opt-disk">
+            <div class="opt">
+              <span class="opt__label">이미지 형식</span>
+              <div class="seg">
+                <label><input type="radio" name="fmt" checked><span>RAW (.dd)</span></label>
+                <label class="is-soon"><input type="radio" name="fmt" disabled><span>E01 <em>다음 버전</em></span></label>
+              </div>
+            </div>
+            <div class="opt">
+              <span class="opt__label">파일 분할</span>
+              <div class="seg">
+                <label><input type="radio" name="split" value="0"><span>안 함</span></label>
+                <label><input type="radio" name="split" value="2" checked><span>2 GB</span></label>
+                <label><input type="radio" name="split" value="4"><span>4 GB</span></label>
+              </div>
+            </div>
+            <div class="opt">
+              <span class="opt__label">해시</span>
+              <div class="chips">
+                <label><input type="checkbox" checked><span>MD5</span></label>
+                <label><input type="checkbox" checked><span>SHA-1</span></label>
+                <label><input type="checkbox" checked><span>SHA-256</span></label>
+              </div>
+            </div>
+            <div class="opt opt--toggles">
+              <label class="toggle"><span><b>이미징 후 검증</b><small>이미지를 다시 읽어 해시를 비교합니다</small></span><input type="checkbox" checked><span class="switch" aria-hidden="true"></span></label>
+              <label class="toggle"><span><b>읽기 오류 구간 0으로 채우기</b><small>오류 위치는 로그에 기록합니다</small></span><input type="checkbox" checked><span class="switch" aria-hidden="true"></span></label>
+            </div>
+            <div class="opt">
+              <span class="opt__label">만들어질 파일</span>
+              <ul class="files" id="fileList"></ul>
+            </div>
+          </div>
+
+          <div class="opts" id="opt-mem" hidden>
+            <div class="opt">
+              <span class="opt__label">출력 형식</span>
+              <div class="seg">
+                <label><input type="radio" name="mfmt" checked><span>RAW (.mem)</span></label>
+                <label class="is-soon"><input type="radio" name="mfmt" disabled><span>AFF4 <em>다음 버전</em></span></label>
+              </div>
+            </div>
+            <div class="opt">
+              <span class="opt__label">해시</span>
+              <div class="chips">
+                <label><input type="checkbox" checked><span>MD5</span></label>
+                <label><input type="checkbox" checked><span>SHA-1</span></label>
+                <label><input type="checkbox" checked><span>SHA-256</span></label>
+              </div>
+            </div>
+            <dl class="props">
+              <div><dt>드라이버</dt><dd>WinPmem 4.0.1, 서명 확인됨</dd></div>
+              <div><dt>드라이버 위치</dt><dd class="mono">F:\WSCollector\drivers\winpmem_x64.sys</dd></div>
+              <div><dt>수집 후</dt><dd>드라이버 서비스 삭제, 로그에 기록</dd></div>
+              <div><dt>도구 자체 사용량</dt><dd>약 410 MB, 프로세스 7개 (보고서에 PID 기록)</dd></div>
+            </dl>
+            <div class="infobar infobar--info">
+              <svg class="ic"><use href="#i-info"/></svg>
+              <p>디스크 이미징과 함께 선택하면 메모리 덤프를 먼저 실행합니다. 이미징하는 동안에도 메모리 내용은 계속 바뀌기 때문입니다.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ===== 3. 수집 진행 ===== -->
+    <section class="screen" id="screen-run" aria-labelledby="h-run" hidden>
+      <header class="page-head page-head--row">
+        <div>
+          <h1 id="h-run">수집 진행</h1>
+          <p id="runLead">창을 닫거나 USB를 뽑지 마세요. 증거 파일이 손상될 수 있습니다.</p>
+        </div>
+        <div class="elapsed"><small>경과 시간</small><b class="mono" id="elapsed">00:00:00</b></div>
+      </header>
+
+      <section class="panel overall" aria-labelledby="h-overall">
+        <div class="overall__top">
+          <h2 id="h-overall">전체 진행률</h2>
+          <b class="overall__pct" id="overallPct">0%</b>
+        </div>
+        <div class="progress progress--lg" role="progressbar" aria-labelledby="h-overall" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress__fill" id="overallFill"></div></div>
+        <p class="overall__sub" id="overallSub">작업 2개 중 1번째</p>
+        <p class="visually-hidden" aria-live="polite" id="announce"></p>
+      </section>
+
+      <div class="run-grid">
+        <section class="panel" aria-labelledby="h-jobs">
+          <header class="panel__head"><h2 id="h-jobs">작업</h2></header>
+          <ol class="jobs" id="jobs"></ol>
+        </section>
+        <section class="panel" aria-labelledby="h-log">
+          <header class="panel__head"><h2 id="h-log">수집 로그</h2><span class="count mono">collection.log</span></header>
+          <ol class="log" id="log" tabindex="0" aria-label="수집 로그"></ol>
+        </section>
+      </div>
+    </section>
+
+    <!-- ===== 4. 결과 ===== -->
+    <section class="screen" id="screen-done" aria-labelledby="h-done" hidden>
+      <header class="page-head page-head--row">
+        <div>
+          <h1 id="h-done">결과</h1>
+          <p>아래 해시 값과 흔적 기록이 보고서에 그대로 들어갑니다.</p>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn--ghost" id="openFolder"><svg class="ic"><use href="#i-folder"/></svg>저장 폴더 열기</button>
+          <button type="button" class="btn btn--primary" id="exportReport"><svg class="ic"><use href="#i-file"/></svg>보고서 내보내기</button>
+        </div>
+      </header>
+
+      <div class="infobar infobar--ok">
+        <svg class="ic"><use href="#i-check-c"/></svg>
+        <p><b>수집을 마쳤습니다.</b> 모든 증거 파일을 다시 읽어 해시가 일치하는 것을 확인했습니다.</p>
+      </div>
+
+      <section aria-labelledby="h-files">
+        <h2 class="section-title" id="h-files">증거 파일</h2>
+        <div class="results" id="results"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="h-fp">
+        <header class="panel__head">
+          <h2 id="h-fp">대상 시스템에 남긴 흔적</h2>
+          <span class="count">분석할 때 WS Collector가 만든 기록을 구분하는 데 씁니다</span>
+        </header>
+        <table class="table">
+          <thead><tr><th scope="col">항목</th><th scope="col">내용</th><th scope="col">원인</th></tr></thead>
+          <tbody>
+            <tr><td>대상 디스크 쓰기</td><td><span class="pill pill--ok">0건</span></td><td>출력과 임시 파일을 모두 외부 매체에 기록</td></tr>
+            <tr><td>실행한 프로세스</td><td class="mono">WSCollector.exe (PID 6120), msedgewebview2.exe 6개 (PID 6188, 6204, 6231, 6290, 6317, 6342)</td><td>프로그램 실행과 화면 표시</td></tr>
+            <tr><td>드라이버 서비스</td><td class="mono">winpmem 생성 14:35:02, 삭제 14:41:37</td><td>메모리 덤프</td></tr>
+            <tr><td>Windows가 남기는 기록</td><td>Prefetch, Amcache, BAM, USB 연결 기록, 이벤트 7045</td><td>프로그램 실행과 USB 연결 (피할 수 없음)</td></tr>
+            <tr><td>WS Collector 파일</td><td class="mono">SHA-256 4be1…9c02 (v0.1.0)</td><td>도구 무결성 확인용</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </section>
+  </main>
+
+  <footer class="bar">
+    <div class="bar__sum" id="barSum"></div>
+    <div class="bar__actions" id="barActions"></div>
+  </footer>
+</div>
+
+<dialog class="dialog" id="cancelDialog" aria-labelledby="h-cancel">
+  <h2 id="h-cancel">수집을 중단할까요?</h2>
+  <p>지금까지 읽은 부분은 남지만 해시가 완성되지 않아 증거로 쓸 수 없습니다. 중단 사실은 로그에 기록됩니다.</p>
+  <div class="dialog__actions">
+    <button type="button" class="btn btn--danger" id="stopBtn">수집 중단</button>
+    <button type="button" class="btn btn--ghost" id="keepBtn" autofocus>계속 수집</button>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="./app.js"></script>
+</body>
+</html>

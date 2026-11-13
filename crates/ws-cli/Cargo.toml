@@ -1,0 +1,25 @@
+[package]
+name = "ws-cli"
+description = "WS Collector CLI"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "wscollector-cli"
+path = "src/main.rs"
+
+[dependencies]
+ws-core = { path = "../ws-core" }
+anyhow.workspace = true
+serde_json.workspace = true
+clap = { version = "4", features = ["derive"] }
+ctrlc = "3"
+# 터미널 화면 (tui): 순수 Rust라 musl 정적 빌드에 그대로 들어감
+ratatui = { version = "0.29", default-features = false, features = ["crossterm"] }
+crossterm = "0.28"
+unicode-width = "0.2"
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
