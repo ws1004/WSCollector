@@ -256,8 +256,9 @@ impl crate::source::Source for LimeSource {
         let pe = ((phys & !4095) + 4096).min(r.end);
         (base + LIME_HEADER + (ps - r.start), base + LIME_HEADER + (pe - r.start))
     }
-    /// 메모리에는 읽을 수 없는 구멍이 있을 수 있어 디스크(64MB)보다 길게 봐 줌.
-    /// 그래도 1GB 넘게 하나도 못 읽으면 원본이 막힌 것(lockdown 등): 0만 담긴 이미지를 만들지 않게 중단
+    fn is_memory(&self) -> bool {
+        true
+    }
     fn dead_run_limit(&self) -> u32 {
         256
     }

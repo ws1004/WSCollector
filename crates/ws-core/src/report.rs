@@ -141,20 +141,31 @@ th{{width:180px;color:#555;font-weight:600}}.mono{{font-family:Consolas,"Cascadi
                 None => h.push_str(&row(tr!("검증", "Verification"), tr!("하지 않음", "Not performed"))),
             }
             if r.bad_sectors > 0 {
-                let ranges = r
-                    .bad_ranges
-                    .iter()
-                    .take(100)
-                    .map(|b| tr!(format!("섹터 {}부터 {}개", b.start_sector, b.count), format!("{} sector(s) from sector {}", b.count, b.start_sector)))
-                    .collect::<Vec<_>>()
-                    .join("<br>");
-                h.push_str(&row(
-                    tr!("읽기 오류", "Read errors"),
-                    &tr!(
-                        format!("{}개 섹터를 0으로 채움<br><span class=\"mono\">{}</span>", r.bad_sectors, ranges),
-                        format!("{} bad sector(s) zero-filled<br><span class=\"mono\">{}</span>", r.bad_sectors, ranges)
-                    ),
-                ));
+                let is_mem = matches!(j.target, crate::target::Target::Memory);
+                if is_mem {
+                    h.push_str(&row(
+                        tr!("건너뛴 페이지", "Skipped pages"),
+                        &tr!(
+                            format!("{}개 페이지 ({}개 구간)를 0으로 채움 - 장치 메모리 등 OS가 보호하는 영역으로, 정상적인 현상입니다", r.bad_sectors, r.bad_ranges.len()),
+                            format!("{} page(s) in {} range(s) zero-filled - protected regions (device memory, hypervisor, etc.), normal for memory acquisition", r.bad_sectors, r.bad_ranges.len())
+                        ),
+                    ));
+                } else {
+                    let ranges = r
+                        .bad_ranges
+                        .iter()
+                        .take(100)
+                        .map(|b| tr!(format!("섹터 {}부터 {}개", b.start_sector, b.count), format!("{} sector(s) from sector {}", b.count, b.start_sector)))
+                        .collect::<Vec<_>>()
+                        .join("<br>");
+                    h.push_str(&row(
+                        tr!("읽기 오류", "Read errors"),
+                        &tr!(
+                            format!("{}개 섹터를 0으로 채움<br><span class=\"mono\">{}</span>", r.bad_sectors, ranges),
+                            format!("{} bad sector(s) zero-filled<br><span class=\"mono\">{}</span>", r.bad_sectors, ranges)
+                        ),
+                    ));
+                }
             }
         }
         h.push_str("</table>");

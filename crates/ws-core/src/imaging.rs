@@ -497,9 +497,9 @@ pub fn run_image_to(
                 } else {
                     dead_chunks = 0;
                 }
-                if failed_here > 0 && bad_ranges.len() <= MAX_BAD_RANGE_LOGS {
+                if failed_here > 0 && !source.is_memory() && bad_ranges.len() <= MAX_BAD_RANGE_LOGS {
                     let at = first_bad.and_then(|b| source.where_is(b)).unwrap_or_else(|| crate::tr!(format!("{off} 지점"), format!("offset {off}")));
-                    let unit = if source.where_is(off).is_some() { crate::tr!("페이지", "page") } else { crate::tr!("섹터", "sector") };
+                    let unit = crate::tr!("섹터", "sector");
                     obs.log(LogLevel::Warn, &crate::tr!(format!("읽기 오류: {at}에서 {unit} {failed_here}개를 0으로 채움 ({e})"), format!("Read error: {failed_here} {unit}(s) at {at} zero-filled ({e})")));
                 }
             }
@@ -554,10 +554,20 @@ pub fn run_image_to(
     let read_secs = started.elapsed().as_secs_f64();
 
     if bad_sectors > 0 {
-        obs.log(
-            LogLevel::Warn,
-            &crate::tr!(format!("읽기 오류: 섹터 {}개 ({}개 구간)를 0으로 채움", bad_sectors, bad_ranges.len()), format!("Read errors: {} sector(s) in {} range(s) zero-filled", bad_sectors, bad_ranges.len())),
-        );
+        if source.is_memory() {
+            obs.log(
+                LogLevel::Info,
+                &crate::tr!(
+                    format!("{}개 페이지 ({}개 구간)를 0으로 채움 - 장치 메모리 등 OS가 보호하는 영역으로, 메모리 수집에서 정상적인 현상입니다", bad_sectors, bad_ranges.len()),
+                    format!("{} page(s) in {} range(s) zero-filled - protected regions (device memory, hypervisor, etc.), normal for memory acquisition", bad_sectors, bad_ranges.len())
+                ),
+            );
+        } else {
+            obs.log(
+                LogLevel::Warn,
+                &crate::tr!(format!("읽기 오류: 섹터 {}개 ({}개 구간)를 0으로 채움", bad_sectors, bad_ranges.len()), format!("Read errors: {} sector(s) in {} range(s) zero-filled", bad_sectors, bad_ranges.len())),
+            );
+        }
         if is_e01 && bad_ranges.iter().any(|r| r.start_sector > u32::MAX as u64) {
             obs.log(
                 LogLevel::Warn,

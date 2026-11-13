@@ -33,6 +33,10 @@ pub trait Source: Send {
     fn is_synthetic(&self, _offset: u64) -> bool {
         false
     }
+    /// 메모리 원본인지. 메모리면 읽기 오류가 정상(장치 메모리 등)이므로 로그를 다르게 표시
+    fn is_memory(&self) -> bool {
+        false
+    }
     /// 오류 위치를 사람이 읽는 말로 (메모리: 물리 주소). 없으면 원본 위치로 표시
     fn where_is(&self, _offset: u64) -> Option<String> {
         None
