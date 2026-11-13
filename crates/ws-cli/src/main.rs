@@ -172,7 +172,7 @@ The firewall must allow inbound TCP 7700 connections (e.g. sudo ufw allow 7700/t
 
 #[derive(Parser)]
 #[command(
-    name = "wscollector-cli",
+    name = "WSCollector-CLI",
     version,
     about = ws_core::tr!("WS Collector: 라이브 증거 수집 도구 (CLI)", "WS Collector: live evidence acquisition tool (CLI)"),
     after_help = ex_main()
@@ -917,8 +917,8 @@ fn cmd_receive(out: PathBuf, listen: String, code: Option<String>, resume_wait: 
             eprintln!(
                 "{}",
                 ws_core::tr!(
-                    format!("  wscollector-cli image -s <대상> --send {addr} --case <사건번호> --evidence <증거번호> --examiner <수집자>"),
-                    format!("  wscollector-cli image -s <target> --send {addr} --case <case number> --evidence <evidence number> --examiner <examiner>")
+                    format!("  WSCollector-CLI image -s <대상> --send {addr} --case <사건번호> --evidence <증거번호> --examiner <수집자>"),
+                    format!("  WSCollector-CLI image -s <target> --send {addr} --case <case number> --evidence <evidence number> --examiner <examiner>")
                 )
             );
             eprintln!(

@@ -7,7 +7,7 @@ authors.workspace = true
 license.workspace = true
 
 [[bin]]
-name = "wscollector-cli"
+name = "WSCollector-CLI"
 path = "src/main.rs"
 
 [dependencies]

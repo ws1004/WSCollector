@@ -22,8 +22,8 @@ use crate::source::{drop_cache, open_device_readonly, FileSource, Source};
 use crate::target::Target;
 
 pub const ADMIN_HINT: super::Bilingual = super::Bilingual {
-    ko: "root 권한이 필요합니다. sudo로 다시 실행하세요. 예: sudo ./wscollector-cli list",
-    en: "Root privileges are required. Run again with sudo, e.g. sudo ./wscollector-cli list",
+    ko: "root 권한이 필요합니다. sudo로 다시 실행하세요. 예: sudo ./WSCollector-CLI list",
+    en: "Root privileges are required. Run again with sudo, e.g. sudo ./WSCollector-CLI list",
 };
 
 fn read_trim(p: impl AsRef<Path>) -> Option<String> {

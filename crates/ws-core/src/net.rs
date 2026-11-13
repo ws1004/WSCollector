@@ -1,8 +1,8 @@
 //! 네트워크 전송: 대상 시스템에서 읽은 이미지를 분석 PC(수신 측)에 바로 저장합니다.
 //!
 //! ```text
-//! [수신 PC]  wscollector-cli receive --out D:\Cases          → 연결 코드 표시, 접속 대기
-//! [대상]     wscollector-cli image -s sda --send IP:7700 ...  → 연결 코드 입력
+//! [수신 PC]  WSCollector-CLI receive --out D:\Cases          → 연결 코드 표시, 접속 대기
+//! [대상]     WSCollector-CLI image -s sda --send IP:7700 ...  → 연결 코드 입력
 //! ```
 //!
 //! - 대상 시스템이 수신 PC로 접속합니다 (서버 방화벽은 들어오는 연결을 막는 경우가 많음).
